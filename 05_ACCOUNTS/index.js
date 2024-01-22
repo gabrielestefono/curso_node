@@ -18,7 +18,7 @@ function operation(){
 		if(action == "Criar conta"){
 			createAnAccount();
 		}else if(action == "Consultar saldo"){
-			// getAccountBalance();
+			getAccountBalance();
 		}else if(action == "Depositar"){
 			deposit();
 		}else if(action == "Sacar"){
