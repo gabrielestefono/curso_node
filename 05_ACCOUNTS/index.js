@@ -112,7 +112,7 @@ function addAmount(nomeConta, valor){
 		console.log(chalk.bgRed.black('Valor inválido!'));
 		deposit();
 	}
-	account.balance += parseFloat(valor) + parseFloat(account.balance);
+	account.balance = parseFloat(valor) + parseFloat(account.balance);
 	fs.writeFileSync(`accounts/${nomeConta}.json`,
 		JSON.stringify(account),
 		function(err){
@@ -130,4 +130,28 @@ function getAccount(accountName){
 	});
 
 	return JSON.parse(accountJson);
+}
+
+// Show account balance
+
+function getAccountBalance(){
+	inquirer.prompt([
+		{
+			name: 'accountName',
+			message: 'Qual o nome da sua conta: ',
+		}
+	]).then((answer) => {
+		const accountName = answer['accountName'];
+
+		// Verify if account exists
+		if(!checkAccount(accountName)){
+			return getAccountBalance();
+		}
+
+		const accountData = getAccount(accountName);
+
+		console.log(chalk.bgBlue.black(`O seu saldo é de R$ ${accountData.balance}`));
+
+		operation();
+	})
 }
